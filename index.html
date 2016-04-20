@@ -2,12 +2,11 @@
 <html ng-app="weatherApp">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather Demo App</title>
+    <title>OZ Weather</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="bower_components/angular-google-places-autocomplete/dist/autocomplete.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
-    <script src="bower_components/angular-google-places-autocomplete/dist/autocomplete.min.js"></script>
     <script src="app.js"></script>
 
     <style>
@@ -20,11 +19,11 @@
   <body ng-controller="bodyController">
     <form class="form-horizontal">
       <fieldset>
-        <legend>Demo</legend>
+        <legend>OZ Weather</legend>
         <div class="form-group">
-          <label class="col-sm-3 control-label">City</label>
+          <label class="col-sm-3 control-label">Select City</label>
           <div class="col-sm-6">
-            <input type="text" g-places-autocomplete ng-model="city" class="form-control" options="autocompleteOptions" force-selection="true"/>
+            <input type="text" my-googleplace my-googleplace-model="city" my-googleplace-callback="updateCity()" placeholder="Enter a city" maxlength="100" class="form-control"/>
           </div>
         </div>
       </fieldset>
