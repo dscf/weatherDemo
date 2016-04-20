@@ -1,4 +1,9 @@
-A simple demo of using some technologies.
+A simple demo of weather forecast in Australia.
+
+Technologies involved:
+
 Angular
+
 Bootstrap
+
 Node.js
