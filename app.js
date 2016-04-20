@@ -17,31 +17,16 @@
     $scope.city = undefined;
     $scope.invalidCity = false;
     $scope.updateCity = function() {
-      var zipCode;
-      var cityName;
-      var componnets = $scope.city.place.address_components;
-      if (componnets) {
-        var postalCode = componnets.filter(x => x.types.indexOf('postal_code') !== -1);
-        if (postalCode.length > 0) {
-          zipCode = postalCode[0].long_name;
-        }
-        if (!zipCode) {
-          var locality = componnets.filter(x => x.types.indexOf('locality') !== -1);
-          if (locality.length > 0) {
-            cityName = locality[0].long_name;
-          }
-        }
-      }
-      if(zipCode) {
-
-      } else if(cityName) {
-
+      var lat;
+      var lng;
+      var geometry = $scope.city.place.geometry;
+      if (geometry) {
+        lat = Math.floor(geometry.location.lat());
+        lng = Math.floor(geometry.location.lng());
       } else {
         $scope.invalidCity = true;
       }
-      console.log(zipCode, cityName);
-
-
+      console.log(lat, lng);
     };
   }])
 
