@@ -1,0 +1,35 @@
+{
+  "name": "weather",
+  "version": "1.0.0",
+  "description": "A simple demo of weather forecast in Australia.",
+  "main": "Gruntfile.js",
+  "dependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-jshint": "~1.0.0",
+    "grunt-contrib-watch": "~1.0.0",
+    "karma-script-launcher": "~0.1.0",
+    "karma-jasmine": "~0.1.5",
+    "requirejs": "~2.1.10",
+    "karma-requirejs": "~0.2.2",
+    "karma-phantomjs2-launcher": "~0.5.0",
+    "karma": "~0.12.16",
+    "grunt-karma": "~0.8.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dscf/weatherDemo.git"
+  },
+  "keywords": [
+    "weather"
+  ],
+  "author": "Terry",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dscf/weatherDemo/issues"
+  },
+  "homepage": "https://github.com/dscf/weatherDemo#readme"
+}
