@@ -1,5 +1,5 @@
 (function() {
-  'use strict'
+  'use strict';
   /*appCfg defines
   country
   address type
@@ -13,7 +13,7 @@
 
   .constant('appCfg', appCfg)
 
-  .controller('bodyController', ['$scope', '$http', function($scope, $http) {
+  .controller('bodyController', ['$scope', function($scope) {
     $scope.city = undefined;
     $scope.invalidCity = false;
     $scope.updateCity = function() {
