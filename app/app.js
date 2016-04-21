@@ -6,18 +6,26 @@
   */
   var appCfg = {
     country: 'au',
-    types: ['(cities)']
+    types: ['(cities)'],
+    defaultLocation: {
+      lat: -33.8737,
+      lon: 151.2069,
+      name: 'Sydney'
+    }
   };
 
   angular.module('weatherApp', [])
 
   .constant('appCfg', appCfg)
 
-  .controller('bodyController', ['$scope', '$http', function($scope, $http) {
+  .controller('bodyController', ['$scope', '$http', '$window', 'weatherService', 'appCfg', function($scope, $http, $window, weatherService, appCfg) {
 
+    var gotUserLocation = false;
     $scope.city = undefined;
     $scope.invalidCity = false;
     $scope.weather = undefined;
+    $scope.inEdit = false;
+
 
     $scope.updateCity = function() {
       var lat;
@@ -26,29 +34,59 @@
       if (geometry) {
         lat = geometry.location.lat();
         lng = geometry.location.lng();
+        weatherService.getWeather(lat, lng, function(data) {
+          $scope.weather = data;
+        });
+        $scope.inEdit = false;
       } else {
         $scope.invalidCity = true;
       }
-      getWeather(lat, lng);
     };
 
-    function getWeather(lat, lon) {
-      $http({
-        url: 'http://api.openweathermap.org/data/2.5/weather',
-        method: 'GET',
-        params: {
-          lat: lat,
-          lon: lon,
-          units: 'metric',
-          APPID: '09616d97516f44b23a52d4767cd38875'
-        }
-      }).then(function(data) {
-        $scope.weather = data;
-      }, function(err) {
-        console.log(err);
+    //entry point
+    //try to get user's current location and weather
+    if ($window.navigator.geolocation) {
+      $window.navigator.geolocation.getCurrentPosition(function(position) {
+        gotUserLocation = true;
+        weatherService.getWeather(position.coords.latitude, position.coords.longitude, function(data) {
+          $scope.weather = data;
+          $scope.city = {
+            description: data.data.name
+          };
+        });
       });
     }
 
+    if (!gotUserLocation) {
+      //display default location
+      $scope.city = {
+        description: appCfg.defaultLocation.name
+      };
+      weatherService.getWeather(appCfg.defaultLocation.lat, appCfg.defaultLocation.lon, function(data) {
+        $scope.weather = data;
+      });
+    }
+  }])
+
+  .factory('weatherService', ['$http', function($http) {
+    return {
+      getWeather: function(lat, lon, callback) {
+        return $http({
+          url: 'http://api.openweathermap.org/data/2.5/weather',
+          method: 'GET',
+          params: {
+            lat: lat,
+            lon: lon,
+            units: 'metric',
+            APPID: '09616d97516f44b23a52d4767cd38875'
+          }
+        }).then(function(data) {
+          callback(data);
+        }, function(err) {
+          console.log(err);
+        });
+      }
+    };
   }])
 
   .filter('temperature', function() {

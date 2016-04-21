@@ -12,24 +12,27 @@
       body {
         padding: 15px;
       }
+      .edit {
+        font-size: 10px;
+        cursor: pointer;
+        color: #aaa;
+      }
+      .form {
+        margin-bottom: 10px;
+      }
 
     </style>
   </head>
   <body ng-controller="bodyController" class="container">
     <div class="panel panel-default">
       <div class="panel-body">
-
-        <form class="form-horizontal">
+        <h1 ng-show="!inEdit">{{city.description}}   <small class="edit" ng-click="inEdit=true">Edit</small></h1>
+        <form ng-show="inEdit" class="form-inline form">
           <div class="form-group has-feedback" ng-class="{'has-error':invalidCity}">
-            <label class="col-sm-2 control-label" for="city">Select City</label>
-            <div class="col-sm-8">
-              <input ng-keydown="invalidCity = false" id="city" type="text" my-googleplace my-googleplace-model="city" my-googleplace-callback="updateCity()" placeholder="Enter a city" maxlength="100" class="form-control"/>
-              <span ng-if="invalidCity" class="form-control-feedback"></span>
-            </div>
+            <input ng-keydown="invalidCity=false" id="city" type="text" my-googleplace my-googleplace-model="city" my-googleplace-callback="updateCity()" placeholder="Enter a city" maxlength="100" class="form-control"/>
+            <span class="edit" ng-click="inEdit=false">Cancel</span>
           </div>
         </form>
-
-        <h5>Result:</h5>
 
         <table class="table">
           <tr>
