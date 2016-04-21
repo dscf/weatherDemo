@@ -15,22 +15,62 @@
 
     </style>
   </head>
-  <body ng-controller="bodyController">
-    <div class="container">
-      <form class="form-horizontal">
-        <div class="form-group has-feedback" ng-class="{'has-error':invalidCity}">
-          <label class="col-sm-2 control-label" for="city">Select City</label>
-          <div class="col-sm-8">
-            <input ng-keydown="invalidCity = false" id="city" type="text" my-googleplace my-googleplace-model="city" my-googleplace-callback="updateCity()" placeholder="Enter a city" maxlength="100" class="form-control"/>
-            <span ng-if="invalidCity" class="form-control-feedback"></span>
+  <body ng-controller="bodyController" class="container">
+    <div class="panel panel-default">
+      <div class="panel-body">
+
+        <form class="form-horizontal">
+          <div class="form-group has-feedback" ng-class="{'has-error':invalidCity}">
+            <label class="col-sm-2 control-label" for="city">Select City</label>
+            <div class="col-sm-8">
+              <input ng-keydown="invalidCity = false" id="city" type="text" my-googleplace my-googleplace-model="city" my-googleplace-callback="updateCity()" placeholder="Enter a city" maxlength="100" class="form-control"/>
+              <span ng-if="invalidCity" class="form-control-feedback"></span>
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
 
-      <h5>Result:</h5>
-      <pre>{{city|json}}</pre>
+        <h5>Result:</h5>
 
+        <table class="table">
+          <tr>
+            <td>main</td>
+            <td>{{weather.data.weather[0].main}}</td>
+          </tr>
+          <tr>
+            <td>icon</td>
+            <td>{{weather.data.weather[0].icon}}</td>
+          </tr>
+          <tr>
+            <td>temp</td>
+            <td>{{weather.data.main.temp|temperature}}</td>
+          </tr>
+          <tr>
+            <td>pressure</td>
+            <td>{{weather.data.main.pressure}}</td>
+          </tr>
+          <tr>
+            <td>humidity</td>
+            <td>{{weather.data.main.humidity}}</td>
+          </tr>
+          <tr>
+            <td>temp_min</td>
+            <td>{{weather.data.main.temp_min|temperature}}</td>
+          </tr>
+          <tr>
+            <td>temp_max</td>
+            <td>{{weather.data.main.temp_max|temperature}}</td>
+          </tr>
+          <tr>
+            <td>wind speed</td>
+            <td>{{weather.data.wind.speed}}</td>
+          </tr>
+          <tr>
+            <td>wind deg</td>
+            <td>{{weather.data.wind.deg}}</td>
+          </tr>
+        </table>
+      </div>
     </div>
-
-  </body>
+  </div>
+</body>
 </html>
