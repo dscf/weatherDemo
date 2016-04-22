@@ -1,7 +1,8 @@
 describe('appTest', function() {
   var $scope;
   var weatherService = {
-    getWeather: jasmine.createSpy('weatherService.getWeather')
+    getWeather: jasmine.createSpy('weatherService.getWeather'),
+    getForecast: jasmine.createSpy('weatherService.getForecast')
   };
 
   //load module and inject mock service

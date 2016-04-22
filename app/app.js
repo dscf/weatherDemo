@@ -24,6 +24,7 @@
     $scope.city = undefined;
     $scope.invalidCity = false;
     $scope.weather = undefined;
+    $scope.forecast = undefined;
     $scope.inEdit = false;
 
 
@@ -37,6 +38,11 @@
         weatherService.getWeather(lat, lng, function(data) {
           $scope.weather = data;
         });
+
+        weatherService.getForecast(lat, lng, function(data) {
+          $scope.forecast = data;
+        });
+
         $scope.inEdit = false;
       } else {
         $scope.invalidCity = true;
@@ -54,6 +60,10 @@
             description: data.data.name
           };
         });
+
+        weatherService.getForecast(position.coords.latitude, position.coords.longitude, function(data) {
+          $scope.forecast = data;
+        });
       });
     }
 
@@ -69,22 +79,28 @@
   }])
 
   .factory('weatherService', ['$http', function($http) {
+    var serviceCall = function(url, lat, lon, callback) {
+      return $http({
+        url: url,
+        method: 'GET',
+        params: {
+          lat: lat,
+          lon: lon,
+          units: 'metric',
+          APPID: '09616d97516f44b23a52d4767cd38875'
+        }
+      }).then(function(data) {
+        callback(data);
+      }, function(err) {
+        console.log(err);
+      });
+    };
     return {
       getWeather: function(lat, lon, callback) {
-        return $http({
-          url: 'http://api.openweathermap.org/data/2.5/weather',
-          method: 'GET',
-          params: {
-            lat: lat,
-            lon: lon,
-            units: 'metric',
-            APPID: '09616d97516f44b23a52d4767cd38875'
-          }
-        }).then(function(data) {
-          callback(data);
-        }, function(err) {
-          console.log(err);
-        });
+        return serviceCall('http://api.openweathermap.org/data/2.5/weather', lat, lon, callback);
+      },
+      getForecast: function(lat, lon, callback) {
+        return serviceCall('http://api.openweathermap.org/data/2.5/forecast', lat, lon, callback);
       }
     };
   }])
