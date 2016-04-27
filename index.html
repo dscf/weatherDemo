@@ -72,8 +72,33 @@
             <td>{{weather.data.wind.deg}}</td>
           </tr>
         </table>
+
+        <table class="table" ng-repeat="item in forecast">
+          <tr>
+            <td>time</td>
+            <td>{{item.dt}}</td>
+          </tr>
+          <tr>
+            <td>Main</td>
+            <td>{{item.main}}</td>
+          </tr>
+
+          <tr>
+            <td>temp</td>
+            <td>{{item.temp|temperature}}</td>
+          </tr>
+
+          <tr>
+            <td>temp_min</td>
+            <td>{{item.tempMin|temperature}}</td>
+          </tr>
+          <tr>
+            <td>temp_max</td>
+            <td>{{item.tempMax|temperature}}</td>
+          </tr>
+
+        </table>
       </div>
-      <pre>{{forecast|json}}</pre>
     </div>
   </div>
 </body>
