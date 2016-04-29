@@ -109,9 +109,25 @@ describe('serviceTest', function() {
   });
 
   it('tests merge forecast', function() {
-    jasmine.getJSONFixtures().fixturesPath='base/test/';
+    jasmine.getJSONFixtures().fixturesPath = 'base/test/';
     var forecast = getJSONFixture('forecast.json');
     var merged = weatherService.mergeForecast(forecast.data.list);
     expect(merged.length).toBe(4);
+  });
+});
+
+describe('filterTest', function() {
+  var temperatureFilter;
+
+  beforeEach(module('weatherApp'));
+
+  beforeEach(function() {
+    inject(function($filter) {
+      temperatureFilter = $filter('temperature');
+    });
+  });
+
+  it('tests tempreture filter', function() {
+    expect(temperatureFilter(23.5345)).toBe('24 °C');
   });
 });
