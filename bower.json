@@ -18,8 +18,10 @@
     "test",
     "tests"
   ],
-  "dependencies": {
+  "devDependencies": {
     "angular": "~1.5.5",
-    "angular-mocks": "~1.5.5"
+    "angular-mocks": "~1.5.5",
+    "jasmine-jquery": "1.5.93",
+    "jquery": "2.1.4"
   }
 }

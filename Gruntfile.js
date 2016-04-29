@@ -25,7 +25,11 @@ module.exports = function(grunt) {
         options: {
           files: [
             'bower_components/angular/angular.js',
-            'bower_components/angular-mocks/angular-mocks.js'
+            'bower_components/angular-mocks/angular-mocks.js',
+            'bower_components/jquery/dist/jquery.min.js',
+            'bower_components/jasmine-jquery/lib/jasmine-jquery.js',
+            
+            {pattern: 'test/*.json', watched: true, served: true, included: false}
           ].concat(all),
           frameworks: ['jasmine'],
           singleRun: true,

@@ -1,0 +1,2 @@
+
+{"coord":{"lon":151.02,"lat":-34.02},"weather":[{"id":801,"main":"Clouds","description":"few clouds","icon":"02d"}],"base":"stations","main":{"temp":25,"pressure":1021,"humidity":57,"temp_min":25,"temp_max":25},"visibility":10000,"wind":{"speed":3.6,"deg":10},"clouds":{"all":20},"dt":1461200400,"sys":{"type":1,"id":8233,"message":0.0123,"country":"AU","sunrise":1461183793,"sunset":1461223532},"id":2158130,"name":"Menai","cod":200}

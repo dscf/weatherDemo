@@ -75,6 +75,10 @@
       weatherService.getWeather(appCfg.defaultLocation.lat, appCfg.defaultLocation.lon, function(data) {
         $scope.weather = data;
       });
+
+      weatherService.getForecast(appCfg.defaultLocation.lat, appCfg.defaultLocation.lon, function(data) {
+        $scope.forecast = weatherService.mergeForecast(data.data.list);
+      });
     }
   }])
 
@@ -132,7 +136,9 @@
         for (var key in byDate) {
           //get average, max, min tempratures
           ret.push({
-            temp: byDate[key].temp.reduce((a, b) => a + b) / byDate[key].temp.length,
+            temp: byDate[key].temp.reduce(function(a, b) {
+              return a + b;
+            }) / byDate[key].temp.length,
             tempMax: Math.max.apply(null, byDate[key].tempMax),
             tempMin: Math.min.apply(null, byDate[key].tempMin),
             //use the weather of 12:00 as the main weather
