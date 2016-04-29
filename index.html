@@ -4,35 +4,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OZ Weather</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
     <script src="app/app.js"></script>
 
-    <style>
-      body {
-        padding: 15px;
-      }
-      .edit {
-        font-size: 10px;
-        cursor: pointer;
-        color: #aaa;
-      }
-      .form {
-        margin-bottom: 10px;
-      }
 
-    </style>
+
   </head>
   <body ng-controller="bodyController" class="container">
     <div class="panel panel-default">
-      <div class="panel-body">
-        <h1 ng-show="!inEdit">{{city.description}}   <small class="edit" ng-click="inEdit=true">Edit</small></h1>
+      <div class="panel-heading">
+        <h1 ng-show="!inEdit">{{city.description}}
+          <small class="edit" ng-click="inEdit=true">Edit</small>
+        </h1>
         <form ng-show="inEdit" class="form-inline form">
           <div class="form-group has-feedback" ng-class="{'has-error':invalidCity}">
             <input ng-keydown="invalidCity=false" id="city" type="text" my-googleplace my-googleplace-model="city" my-googleplace-callback="updateCity()" placeholder="Enter a city" maxlength="100" class="form-control"/>
             <span class="edit" ng-click="inEdit=false">Cancel</span>
           </div>
         </form>
+      </div>
+      <div class="panel-body">
 
         <table class="table">
           <tr>
