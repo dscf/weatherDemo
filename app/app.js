@@ -40,7 +40,7 @@
         });
 
         weatherService.getForecast(lat, lng, function(data) {
-          $scope.forecast = data.data.list;
+          $scope.forecast = weatherService.mergeForecast(data.data.list);
         });
 
         $scope.inEdit = false;
