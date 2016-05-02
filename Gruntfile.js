@@ -28,6 +28,7 @@ module.exports = function(grunt) {
             'bower_components/angular-mocks/angular-mocks.js',
             'bower_components/jquery/dist/jquery.min.js',
             'bower_components/jasmine-jquery/lib/jasmine-jquery.js',
+            'manual_components/googlemaps/googleplace.js',
             
             {pattern: 'test/*.json', watched: true, served: true, included: false}
           ].concat(all),

@@ -68,6 +68,31 @@ describe('ControllerTest', function() {
   });
 });
 
+describe('directiveTest', function() {
+  var $compile;
+  var $rootScope;
+
+  beforeEach(module('weatherApp'));
+  beforeEach(inject(function(_$compile_, _$rootScope_) {
+    $rootScope = _$rootScope_;
+    $compile = _$compile_;
+  }));
+
+  it('tests myGoogleplace', function() {
+    var element = angular.element('<input type="text" my-googleplace my-googleplace-model="city" my-googleplace-callback="updateCity()">');
+    var scope = $rootScope.$new();
+    var gPlace;
+    $compile(element)(scope);
+    scope.$digest();
+    gPlace = element.isolateScope().gPlace;
+    expect(gPlace).not.toBeFalsy();
+    scope.updateCity = jasmine.createSpy('scope.updateCity');
+    google.maps.event.trigger(gPlace, 'place_changed');
+    scope.$digest();
+    expect(scope.updateCity).toHaveBeenCalled();
+  });
+});
+
 describe('serviceTest', function() {
   var weatherService;
   var $httpBackend;
