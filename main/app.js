@@ -193,7 +193,7 @@
     })
     .filter('iconstyle', function(iconStyle) {
       return function(key) {
-        return iconStyle.get(key);
+        return iconStyle[key];
       };
     })
     .directive('myGoogleplace', ['appCfg', function(appCfg) {

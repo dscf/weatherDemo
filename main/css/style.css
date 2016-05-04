@@ -5,6 +5,9 @@ body {
   padding: 15px;
   color: #fff;
 }
+.container {
+  width: 60%;
+}
 .edit {
   font-size: 10px;
   cursor: pointer;
@@ -53,4 +56,11 @@ hr {
 }
 .forecast-icon {
   font-size: 36px;
+}
+
+
+@media (max-width: 960px) {
+  .container {
+    width: 90%;
+  }
 }
