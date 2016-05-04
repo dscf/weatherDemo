@@ -153,6 +153,6 @@ describe('filterTest', function() {
   });
 
   it('tests tempreture filter', function() {
-    expect(temperatureFilter(23.5345)).toBe('24 °C');
+    expect(temperatureFilter(23.5345)).toBe('24°');
   });
 });

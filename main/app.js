@@ -14,12 +14,35 @@
     }
   };
 
+  var iconStyle = {};
+  iconStyle["01d"] = "wi-day-sunny";
+  iconStyle["02d"] = "wi-day-cloudy";
+  iconStyle["03d"] = "wi-cloud";
+  iconStyle["04d"] = "wi-cloudy";
+  iconStyle["09d"] = "wi-day-showers";
+  iconStyle["10d"] = "wi-day-rain";
+  iconStyle["11d"] = "wi-day-thunderstorm";
+  iconStyle["13d"] = "wi-day-snow";
+  iconStyle["50d"] = "wi-day-fog";
+
+  iconStyle["01n"] = "wi-night-clear";
+  iconStyle["02n"] = "wi-night-alt-cloudy";
+  iconStyle["03n"] = "wi-night-alt-cloudy";
+  iconStyle["04n"] = "wi-cloudy";
+  iconStyle["09n"] = "wi-night-alt-showers";
+  iconStyle["10n"] = "wi-night-alt-rain";
+  iconStyle["11n"] = "wi-night-alt-thunderstorm";
+  iconStyle["13n"] = "wi-night-alt-snow";
+  iconStyle["50n"] = "wi-night-fog";
+
+
   angular.module('weatherApp', [])
 
   .constant('appCfg', appCfg)
 
-  .controller('bodyController', ['$scope', '$http', '$window', 'weatherService', 'appCfg', function($scope, $http, $window, weatherService, appCfg) {
+  .constant('iconStyle', iconStyle)
 
+  .controller('bodyController', ['$scope', '$http', '$window', 'weatherService', 'appCfg', function($scope, $http, $window, weatherService, appCfg) {
     var gotUserLocation = false;
     $scope.city = undefined;
     $scope.invalidCity = false;
@@ -114,7 +137,8 @@
           var temp = segment.main.temp;
           var tempMax = segment.main.temp_max;
           var tempMin = segment.main.temp_min;
-          var main = segment.weather[0].main;
+          var desc = segment.weather[0].description;
+          var icon = segment.weather[0].icon;
 
           var key = segment.dt_txt.substr(0, 10);
 
@@ -123,27 +147,35 @@
               temp: [temp],
               tempMax: [tempMax],
               tempMin: [tempMin],
-              main: [main]
+              desc: [desc],
+              icon: [icon]
             };
           } else {
             byDate[key].temp.push(temp);
             byDate[key].tempMax.push(tempMax);
             byDate[key].tempMin.push(tempMin);
-            byDate[key].main.push(main);
+            byDate[key].desc.push(desc);
+            byDate[key].icon.push(icon);
           }
         });
 
         for (var key in byDate) {
           //get average, max, min tempratures
+          var totalTemp = byDate[key].temp.reduce(function(a, b) {
+            return a + b;
+          });
+          var avgTemp = totalTemp / byDate[key].temp.length;
+          //use the weather of 12:00 as the main weather
+          var index = byDate[key].desc.length > 3 ? 4 : byDate[key].desc.length - 1;
+          var midDayDesc = byDate[key].desc[index];
+          var midDayIcon = byDate[key].icon[index];
           ret.push({
-            temp: byDate[key].temp.reduce(function(a, b) {
-              return a + b;
-            }) / byDate[key].temp.length,
+            temp: avgTemp,
             tempMax: Math.max.apply(null, byDate[key].tempMax),
             tempMin: Math.min.apply(null, byDate[key].tempMin),
-            //use the weather of 12:00 as the main weather
-            main: byDate[key].main.length > 3 ? byDate[key].main[4] : byDate[key].main[byDate[key].main.length - 1],
-            dt: key
+            icon: midDayIcon,
+            desc: midDayDesc,
+            dt: key.substr(5, 10)
           });
         }
         //pick out today's data
@@ -155,8 +187,13 @@
   .filter('temperature', function() {
       return function(data) {
         if (data && angular.isNumber(data)) {
-          return Math.round(data) + " \xB0C";
+          return Math.round(data) + "\xB0";
         }
+      };
+    })
+    .filter('iconstyle', function(iconStyle) {
+      return function(key) {
+        return iconStyle.get(key);
       };
     })
     .directive('myGoogleplace', ['appCfg', function(appCfg) {

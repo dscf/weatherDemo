@@ -16,7 +16,7 @@ body {
 .container {
   margin: 50px auto 0;
   background-position: center center;
-  background: url('/images/background.jpg') center center;
+  background: url('/main/images/background.jpg') center center;
   top: 0;
   right: 0;
   bottom: 0;
@@ -31,4 +31,26 @@ body {
 }
 .container .panel > .panel-heading {
   background-color: rgba(245, 245, 245, 0.2);
+}
+.main-icon {
+  font-size: 120px;
+}
+.m-temp {
+  padding: 0 8px;
+}
+.main-temp {
+  font-size: 32px;
+  margin: 8px;
+}
+.desc {
+  margin: 8px 0;
+}
+hr {
+  width: 50%;
+}
+.forecast {
+  padding: 0px 15px !important;
+}
+.forecast-icon {
+  font-size: 36px;
 }
