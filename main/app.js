@@ -47,9 +47,25 @@
     $scope.city = undefined;
     $scope.invalidCity = false;
     $scope.weather = undefined;
-    $scope.forecast = undefined;
+    $scope.forecastByDay = undefined;
+    $scope.forecastBreak = undefined;
     $scope.inEdit = false;
 
+    var updateWeather = function updateWeather(lat, lng) {
+      weatherService.getWeather(lat, lng, function(data) {
+        $scope.weather = data;
+        if (!$scope.city) {
+          $scope.city = {
+            description: data.data.name
+          };
+        }
+      });
+
+      weatherService.getForecast(lat, lng, function(data) {
+        $scope.forecastBreak = weatherService.extractForecast(data.data.list);
+        $scope.forecastByDay = weatherService.mergeForecast(data.data.list);
+      });
+    };
 
     $scope.updateCity = function() {
       var lat;
@@ -58,14 +74,7 @@
       if (geometry) {
         lat = geometry.location.lat();
         lng = geometry.location.lng();
-        weatherService.getWeather(lat, lng, function(data) {
-          $scope.weather = data;
-        });
-
-        weatherService.getForecast(lat, lng, function(data) {
-          $scope.forecast = weatherService.mergeForecast(data.data.list);
-        });
-
+        updateWeather(lat, lng);
         $scope.inEdit = false;
       } else {
         $scope.invalidCity = true;
@@ -77,31 +86,12 @@
     if ($window.navigator.geolocation) {
       $window.navigator.geolocation.getCurrentPosition(function(position) {
         gotUserLocation = true;
-        weatherService.getWeather(position.coords.latitude, position.coords.longitude, function(data) {
-          $scope.weather = data;
-          $scope.city = {
-            description: data.data.name
-          };
-        });
-
-        weatherService.getForecast(position.coords.latitude, position.coords.longitude, function(data) {
-          $scope.forecast = weatherService.mergeForecast(data.data.list);
-        });
+        updateWeather(position.coords.latitude, position.coords.longitude);
+      }, function() {
+        updateWeather(appCfg.defaultLocation.lat, appCfg.defaultLocation.lon);
       });
-    }
-
-    if (!gotUserLocation) {
-      //display default location
-      $scope.city = {
-        description: appCfg.defaultLocation.name
-      };
-      weatherService.getWeather(appCfg.defaultLocation.lat, appCfg.defaultLocation.lon, function(data) {
-        $scope.weather = data;
-      });
-
-      weatherService.getForecast(appCfg.defaultLocation.lat, appCfg.defaultLocation.lon, function(data) {
-        $scope.forecast = weatherService.mergeForecast(data.data.list);
-      });
+    } else {
+      updateWeather(appCfg.defaultLocation.lat, appCfg.defaultLocation.lon);
     }
   }])
 
@@ -128,6 +118,16 @@
       },
       getForecast: function(lat, lon, callback) {
         return serviceCall('http://api.openweathermap.org/data/2.5/forecast', lat, lon, callback);
+      },
+      extractForecast: function(data) {
+        var ret = [];
+        data.forEach(function(segment) {
+          ret.push({
+            temp: segment.main.temp,
+            dt: segment.dt_txt
+          });
+        });
+        return ret;
       },
       mergeForecast: function(data) {
         var byDate = {};
@@ -169,13 +169,15 @@
           var index = byDate[key].desc.length > 3 ? 4 : byDate[key].desc.length - 1;
           var midDayDesc = byDate[key].desc[index];
           var midDayIcon = byDate[key].icon[index];
+          var date = new Date(key);
+          var formatedDate = date.getDate() + "/" + (date.getMonth() + 1);
           ret.push({
             temp: avgTemp,
             tempMax: Math.max.apply(null, byDate[key].tempMax),
             tempMin: Math.min.apply(null, byDate[key].tempMin),
             icon: midDayIcon,
             desc: midDayDesc,
-            dt: key.substr(5, 10)
+            dt: formatedDate
           });
         }
         //pick out today's data
@@ -226,5 +228,36 @@
           });
         }
       };
-    }]);
+    }])
+    .directive('myLineChart', function() {
+      return {
+        restrict: 'A',
+        template: '<div></div>',
+        link: function(scope, element, attrs) {
+          console.log(attrs.chartdata);
+          var graph = new Morris.Line({
+            element: element,
+            data: scope[attrs.chartdata],
+            xkey: 'dt',
+            ykeys: ['temp'],
+            labels: ['Temperature'],
+            xLabels: 'hour',
+            lineColors: ['#fff'],
+            lineWidth: 4,
+            pointSize: 0,
+            gridLineColor: 'rgba(255,255,255,.5)',
+            hideHover: 'auto',
+            resize: true,
+            gridTextColor: '#fff',
+            dateFormat: function(x) {
+              var date = new Date(x);
+              return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' ' + date.getHours() + ':00';
+            }
+          });
+          scope.$watch(attrs.chartdata, function(value) {
+            graph.setData(value);
+          });
+        }
+      };
+    });
 }());

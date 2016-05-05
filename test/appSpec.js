@@ -21,9 +21,6 @@ describe('ControllerTest', function() {
   });
 
   it('tests scope initialization', function() {
-    expect($scope.city).toEqual({
-      description: 'Sydney'
-    });
     expect($scope.invalidCity).toBe(false);
     expect(weatherService.getWeather).toHaveBeenCalled();
     expect(weatherService.getForecast).toHaveBeenCalled();
@@ -45,19 +42,23 @@ describe('ControllerTest', function() {
   });
 
   it('tests city changes with invalid data', function() {
-    $scope.city.place = {
-      geometry: undefined
+    $scope.city = {
+      place: {
+        geometry: undefined
+      }
     };
     $scope.updateCity();
     expect($scope.invalidCity).toBe(true);
   });
 
   it('tests city changes with valid data', function() {
-    $scope.city.place = {
-      geometry: {
-        location: {
-          lat: function() {},
-          lng: function() {}
+    $scope.city = {
+      place: {
+        geometry: {
+          location: {
+            lat: function() {},
+            lng: function() {}
+          }
         }
       }
     };

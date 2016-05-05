@@ -4,17 +4,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OZ Weather</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="bower_components/weather-icons/css/weather-icons.min.css">
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
     <script src="app.js"></script>
+
   </head>
 
   <body ng-controller="bodyController" class="container">
     <div class="panel panel-default">
       <div class="panel-heading text-center">
-        <h1 ng-show="!inEdit">{{city.description}}
+        <h1 ng-show="!inEdit">{{city.description.split(",")[0]}}
           <small class="edit" ng-click="inEdit=true">Edit</small>
         </h1>
         <form ng-show="inEdit" class="form-inline form">
@@ -25,37 +30,42 @@
         </form>
       </div>
       <div class="panel-body">
-
-        <div class="text-center">
-          <h1 class="main-icon wi {{weather.data.weather[0].icon|iconstyle}}"></h1>
-          <div class="main-temp">
-            {{weather.data.main.temp|temperature}}
-          </div>
-          <div class="">
-            <span class="m-temp">{{weather.data.main.temp_min|temperature}}</span>
-            <span class="m-temp">{{weather.data.main.temp_max|temperature}}</span>
-          </div>
-          <div class="desc">
-            {{weather.data.weather[0].description}}
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="text-center">
+              <h1 class="main-icon wi {{weather.data.weather[0].icon|iconstyle}}"></h1>
+              <div class="main-temp">
+                {{weather.data.main.temp|temperature}}
+              </div>
+              <div>
+                <span class="m-temp">{{weather.data.main.temp_min|temperature}}</span>
+                <span class="m-temp">{{weather.data.main.temp_max|temperature}}</span>
+              </div>
+              <div class="desc">
+                {{weather.data.weather[0].description}}
+              </div>
+            </div>
+            <hr/>
+            <div class="text-center">
+              <ul class="list-unstyled list-inline">
+                <li ng-repeat="item in forecastByDay" class="forecast">
+                  <div>
+                    {{item.dt}}
+                  </div>
+                  <div class="forecast-icon wi {{item.icon|iconstyle}}"></div>
+                  <div>
+                    {{item.tempMax|temperature}}/{{item.tempMin|temperature}}
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <hr/>
+            <div my-line-chart chartdata="forecastBreak" style="height: 250px;"></div>
           </div>
         </div>
-        <hr/>
-        <div class="text-center">
-          <ul class="list-unstyled list-inline">
-            <li ng-repeat="item in forecast" class="forecast">
-              <div>
-                {{item.dt}}
-              </div>
-              <div class="forecast-icon wi {{item.icon|iconstyle}}"></div>
-              <div>
-                {{item.tempMax|temperature}}/{{item.tempMin|temperature}}
-              </div>
-            </li>
-          </ul>
-        </div>
-
       </div>
     </div>
   </div>
+
 </body>
 </html>
