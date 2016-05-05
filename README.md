@@ -10,10 +10,17 @@ A simple demo of weather forecast in Australia.
 
 * Angular
 * Bootstrap
+* Grunt
+* Karma
+* Jasmine
+* JSHint
+* Express
 * Node.js
 
 ##How to run##
 
 1. npm install
 2. cd main && bower install
-3. run http-server, then launch browser and go to 127.0.0.1:8080
+3. cd ..
+4. node server.js
+5. go to 127.0.0.1:3000
