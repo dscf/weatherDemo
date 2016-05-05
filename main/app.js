@@ -25,15 +25,15 @@
   iconStyle["13d"] = "wi-day-snow";
   iconStyle["50d"] = "wi-day-fog";
 
-  iconStyle["01n"] = "wi-night-clear";
-  iconStyle["02n"] = "wi-night-alt-cloudy";
-  iconStyle["03n"] = "wi-night-alt-cloudy";
-  iconStyle["04n"] = "wi-cloudy";
-  iconStyle["09n"] = "wi-night-alt-showers";
-  iconStyle["10n"] = "wi-night-alt-rain";
-  iconStyle["11n"] = "wi-night-alt-thunderstorm";
-  iconStyle["13n"] = "wi-night-alt-snow";
-  iconStyle["50n"] = "wi-night-fog";
+  iconStyle["01n"] = iconStyle["01d"];
+  iconStyle["02n"] = iconStyle["02d"];
+  iconStyle["03n"] = iconStyle["03d"];
+  iconStyle["04n"] = iconStyle["04d"];
+  iconStyle["09n"] = iconStyle["09d"];
+  iconStyle["10n"] = iconStyle["10d"];
+  iconStyle["11n"] = iconStyle["11d"];
+  iconStyle["13n"] = iconStyle["13d"];
+  iconStyle["50n"] = iconStyle["50d"];
 
 
   angular.module('weatherApp', [])

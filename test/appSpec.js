@@ -143,16 +143,39 @@ describe('serviceTest', function() {
 
 describe('filterTest', function() {
   var temperatureFilter;
-
+  var iconStyle;
   beforeEach(module('weatherApp'));
 
   beforeEach(function() {
-    inject(function($filter) {
+    inject(function($filter, _iconStyle_) {
       temperatureFilter = $filter('temperature');
+      iconStyle = _iconStyle_;
     });
   });
 
   it('tests tempreture filter', function() {
     expect(temperatureFilter(23.5345)).toBe('24°');
+  });
+
+  it('tests iconstyle filter', function() {
+    expect(iconStyle["01d"]).toBe("wi-day-sunny");
+    expect(iconStyle["02d"]).toBe("wi-day-cloudy");
+    expect(iconStyle["03d"]).toBe("wi-cloud");
+    expect(iconStyle["04d"]).toBe("wi-cloudy");
+    expect(iconStyle["09d"]).toBe("wi-day-showers");
+    expect(iconStyle["10d"]).toBe("wi-day-rain");
+    expect(iconStyle["11d"]).toBe("wi-day-thunderstorm");
+    expect(iconStyle["13d"]).toBe("wi-day-snow");
+    expect(iconStyle["50d"]).toBe("wi-day-fog");
+
+    expect(iconStyle["01n"]).toBe("wi-day-sunny");
+    expect(iconStyle["02n"]).toBe("wi-day-cloudy");
+    expect(iconStyle["03n"]).toBe("wi-cloud");
+    expect(iconStyle["04n"]).toBe("wi-cloudy");
+    expect(iconStyle["09n"]).toBe("wi-day-showers");
+    expect(iconStyle["10n"]).toBe("wi-day-rain");
+    expect(iconStyle["11n"]).toBe("wi-day-thunderstorm");
+    expect(iconStyle["13n"]).toBe("wi-day-snow");
+    expect(iconStyle["50n"]).toBe("wi-day-fog");
   });
 });
