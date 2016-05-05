@@ -29,6 +29,8 @@ module.exports = function(grunt) {
             'main/bower_components/jquery/dist/jquery.min.js',
             'main/bower_components/jasmine-jquery/lib/jasmine-jquery.js',
             'main/manual_components/googlemaps/googleplace.js',
+            'main/manual_components/raphael/raphael.min.js',
+            'main/manual_components/morris/morris.min.js',
 
             {pattern: 'test/*.json', watched: true, served: true, included: false}
           ].concat(all),

@@ -234,7 +234,6 @@
         restrict: 'A',
         template: '<div></div>',
         link: function(scope, element, attrs) {
-          console.log(attrs.chartdata);
           var graph = new Morris.Line({
             element: element,
             data: scope[attrs.chartdata],

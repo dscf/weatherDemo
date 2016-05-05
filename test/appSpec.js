@@ -92,6 +92,14 @@ describe('directiveTest', function() {
     scope.$digest();
     expect(scope.updateCity).toHaveBeenCalled();
   });
+
+  it('test myLineChart', function() {
+    var element = angular.element('<div my-line-chart chartdata="forecastBreak"></div>');
+    var scope = $rootScope.$new();
+    $compile(element)(scope);
+    scope.$digest();
+    expect(element.html()).toContain('"morris-hover');
+  });
 });
 
 describe('serviceTest', function() {
@@ -139,6 +147,13 @@ describe('serviceTest', function() {
     var forecast = getJSONFixture('forecast.json');
     var merged = weatherService.mergeForecast(forecast.data.list);
     expect(merged.length).toBe(4);
+  });
+
+  it('tests extract forecast', function() {
+    jasmine.getJSONFixtures().fixturesPath = 'base/test/';
+    var forecast = getJSONFixture('forecast.json');
+    var extracted = weatherService.extractForecast(forecast.data.list);
+    expect(extracted.length).toBe(36);
   });
 });
 
