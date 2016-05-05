@@ -1,17 +1,19 @@
+#Weather App#
+
 A simple demo of weather forecast in Australia.
 
-Technologies involved:
+##Screenshot##
+![Weather App](/screenshot.png?raw=true)
 
-Angular
 
-Bootstrap
+##Technologies involved##
 
-Node.js
+*Angular
+*Bootstrap
+*Node.js
 
-How to run
+##How to run##
 
-1 npm install
-
-2 cd main && bower install
-
-3 http-server, then launch browser and go to 127.0.0.1:8080 
+1. npm install
+2. cd main && bower install
+3.run http-server, then launch browser and go to 127.0.0.1:8080
