@@ -20,7 +20,7 @@ A simple demo of weather forecast in Australia.
 ##How to run##
 
 1. npm install
-2. cd main && bower install
+2. cd public && bower install
 3. cd ..
 4. node server.js
 5. go to 127.0.0.1:3000
