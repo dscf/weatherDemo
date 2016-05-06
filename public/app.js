@@ -102,9 +102,7 @@
         method: 'GET',
         params: {
           lat: lat,
-          lon: lon,
-          units: 'metric',
-          APPID: '09616d97516f44b23a52d4767cd38875'
+          lon: lon
         }
       }).then(function(data) {
         callback(data);
@@ -114,10 +112,10 @@
     };
     return {
       getWeather: function(lat, lon, callback) {
-        return serviceCall('http://api.openweathermap.org/data/2.5/weather', lat, lon, callback);
+        return serviceCall('weather', lat, lon, callback);
       },
       getForecast: function(lat, lon, callback) {
-        return serviceCall('http://api.openweathermap.org/data/2.5/forecast', lat, lon, callback);
+        return serviceCall('forecast', lat, lon, callback);
       },
       extractForecast: function(data) {
         var ret = [];

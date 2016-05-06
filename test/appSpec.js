@@ -112,10 +112,10 @@ describe('serviceTest', function() {
     inject(function($injector, _weatherService_) {
       weatherService = _weatherService_;
       $httpBackend = $injector.get('$httpBackend');
-      $httpBackend.when('GET', /\/api\.openweathermap\.org\/data\/2\.5\/weather.*/).respond({
+      $httpBackend.when('GET', /weather.*/).respond({
         data: {}
       });
-      $httpBackend.when('GET', /\/api\.openweathermap\.org\/data\/2\.5\/forecast.*/).respond({
+      $httpBackend.when('GET', /forecast.*/).respond({
         list: [{
           main: {
             temp: 10,
@@ -135,8 +135,8 @@ describe('serviceTest', function() {
   });
 
   it('tests weatherService http requests', function() {
-    $httpBackend.expectGET('http://api.openweathermap.org/data/2.5/weather?APPID=09616d97516f44b23a52d4767cd38875&lat=1&lon=2&units=metric');
-    $httpBackend.expectGET('http://api.openweathermap.org/data/2.5/forecast?APPID=09616d97516f44b23a52d4767cd38875&lat=1&lon=2&units=metric');
+    $httpBackend.expectGET('weather?lat=1&lon=2');
+    $httpBackend.expectGET('forecast?lat=1&lon=2');
     weatherService.getWeather(1, 2, function() {});
     weatherService.getForecast(1, 2, function() {});
     $httpBackend.flush();

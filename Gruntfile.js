@@ -1,7 +1,8 @@
 module.exports = function(grunt) {
-  var src = ['main/app.js'];
+  var src = ['public/app.js'];
+  var apiSrc = ['server.js', 'api/*js'];
   var testSrc = ['test/*js'];
-  var all = src.concat(testSrc);
+  var all = src.concat(testSrc).concat(apiSrc);
   grunt.initConfig({
     watch: {
       scripts: {
@@ -24,16 +25,16 @@ module.exports = function(grunt) {
       unit: {
         options: {
           files: [
-            'main/bower_components/angular/angular.js',
-            'main/bower_components/angular-mocks/angular-mocks.js',
-            'main/bower_components/jquery/dist/jquery.min.js',
-            'main/bower_components/jasmine-jquery/lib/jasmine-jquery.js',
-            'main/manual_components/googlemaps/googleplace.js',
-            'main/manual_components/raphael/raphael.min.js',
-            'main/manual_components/morris/morris.min.js',
+            'public/bower_components/angular/angular.js',
+            'public/bower_components/angular-mocks/angular-mocks.js',
+            'public/bower_components/jquery/dist/jquery.min.js',
+            'public/bower_components/jasmine-jquery/lib/jasmine-jquery.js',
+            'public/manual_components/googlemaps/googleplace.js',
+            'public/manual_components/raphael/raphael.min.js',
+            'public/manual_components/morris/morris.min.js',
 
             {pattern: 'test/*.json', watched: true, served: true, included: false}
-          ].concat(all),
+          ].concat(src).concat(testSrc),
           frameworks: ['jasmine'],
           singleRun: true,
           browsers: ['PhantomJS2'],
